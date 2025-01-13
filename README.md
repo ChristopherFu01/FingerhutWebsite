@@ -2,22 +2,45 @@
 
 ## Table of Contents
 
-- [I. Executive Summary](#i.-executive-summary)
-- [II. Acknowledgments](#ii.-acknowledgments)
+- [Executive Summary](#executive-summary)
+- [Acknowledgments](#acknowledgments)
   - [Team Acknowledgment](#team-acknowledgment)
   - [Data Acknowledgment](#data-acknowledgment)
-- [A. Abstract](#a.-abstract)
-- [B. Introduction](#b.-introduction)
+- [Abstract](#abstract)
+- [Introduction](#introduction)
 - [Question 1](#question-1)
+  - [1.1 Exploratory Data Analysis](#1.1-exploratory-data-analysis)
+  - [1.2 Data Cleaning](#1.2-data-cleaning)
+  - [1.3 Feature Engineering](#1.3-feature-engineering)
+  - [1.4 Modeling](#1.4-modeling)
+    - [1.4.1 Logistic Regression](#1.4.1-logistic-regression)
+    - [1.4.2 Random Forest](#1.4.2-random-forest)
+    - [1.4.3 K-Means Clustering — K-means Classifier](#1.4.3-k-means-clustering-—-k-means-classifier)
+  - [1.5 Results](#1.5-results)
+- [Question 2](#question-2)
+  - [2.1 Exploratory Data Analysis](#2.1-exploratory-data-analysis)
+  - [2.2 Data Engineering/Feature Engineering](#2.2-data-enginering/feature-engineering)
+  - [2.3 Logistic Regression / Random Forest Models (Classification of Time between Steps)](#2.3-logistic-regression-/-random-forest-models-classification-of-time-between-steps)
+  - [2.4 Results: Logistic Regression / Random Forest Models](#2.4-results:-logistic-regression-/-random-forest-models)
+  - [2.5 Results: "Binary Dataset"](#2.5-results-"binary-dataset")
+  - [2.6 Results: "Values Dataset"](#2.6-results-"values-dataset")
+- [Question 3](#question-3)
+  - [3.1 Data preprocessing](#3.1-data-preprocessing)
+  - [3.2 Average Model](#3.2-average-model)
+  - [3.3 LSTM Model](#3.3-lstm-model)
+  - [3.4 Prediction Results](#3.4-prediction-results)
+- [4 Discussion](#4-discussion)
+  - [4.1 Conclusion](#4.1-conclusion)
+  - [4.2 Future Work](#4.2-future-work) 
 
-## I. Executive Summary
+## Executive Summary
 
   In this report, we aim to determine flaws with the current Fingerhut website design and provide feedback for possible revisions to address these issues.
   Using Fingerhut’s ideal journey for labeling customers’ journeys, we performed binary classification using Logistic Regression, Random Forest, and K-Means Clustering with Classification. From the results of all models, we observe that a revised ideal journey would include the following stages: “First Purchase,” “Prospecting,” “Downpayment,” and “Orders Shipped.” The “Apply for Credit” stage lacks the same impact as these stages, thus requiring a revision to its individual events.
   We designed four combinations of predictor variables to ultimately understand which variable(s) heavily impact the response variable “Order Shipped.” We isolated predictor variables such as “Downpayment” and “Credit Account” and used “binary” and “values” datasets, subsequently performing Logistic Regression to confirm that “Downpayment” and “Credit Account” are highly correlated with “Order Shipped.” Overall, we analyzed the feature importance of our predictors in the Logistic Regression models we implemented. We ultimately determined that a customer deviating from the ideal was more likely to have an order shipped had they prospected more frequently than other customers. Furthermore, we were able to use the timestamp variables to find hotspots in the customer interaction cycle such that Fingerhut can maximize the percentage of customers that complete their credit rehabilitation journey and graduate to the next program “Fetti” which includes a revolving line of credit.
   To enhance customer conversion rate, specifically by encouraging customers to proceed from one milestone to the next one, we focus on predicting the time for the milestones, enabling us to customize incentives such as email and promotions accordingly. Our approach suggests that the LSTM (Long Short-Term Memory) model with the time elapsed and journey_steps_until end variable for prior milestones as predictors is a viable method for forecasting the time for the next milestone. While acknowledging the limitations in model accuracy, we believe that our approach serves as a solid foundation for developing more personalized engagement strategies.
 
-## II. Acknowledgments
+## Acknowledgments
 
 ### Team Acknowledgment
 
@@ -30,11 +53,11 @@ I would like to extend my gratitude to the following members who contributed to 
 
 The data used in this project was provided by Fingerhut, an American catalog/online retailer.
 
-## A. Abstract
+## Abstract
 
   This report examines the Fingerhut dataset. It is split into three questions, with each section having its own preprocessing steps, models, and results. We compare and contrast multiple models to draw conclusions about these questions as well as discover additional insights. Through this process, we aim to evaluate the model performance based on several metrics to see how valid and applicable the model results are. We also discuss different techniques including vectorization, supervised machine learning models, unsupervised machine learning models, and statistical modeling.
 
-## B. Introduction
+## Introduction
 
   Using machine learning models and statistical modeling that we have learned from our data theory courses at UCLA, we hoped to guide Fingerhut in optimal journeys taken by customers and provide suggestions. In this project, we aim to explore flaws inherent in Fingerhut’s website as well as customer journeys and provide recommendations to resolve such issues.
   This larger thematic focus was split into three smaller questions to provide the most context: (1) How optimal is Fingerhut’s ideal path for customer journeys? (2) How can we maximize a customer achieving the “Order shipped” milestone using their interaction with intermediate steps? (3) How can we maximize the customer conversion rate by predicting customer behaviors?
