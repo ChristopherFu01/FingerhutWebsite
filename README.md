@@ -64,6 +64,7 @@ The data used in this project was provided by Fingerhut, an American catalog/onl
   We began with two .csv files: export.csv (the main Fingerhut dataset) and Event Definitions.csv. In export.csv, there are 64,911,906 entries for customers described by 7 columns: customer_id (the customer ID), account_id (the account ID), ed_id (the event ID), event_name (name of the event), event_timestamp (when the event occurred), and journey_steps_until_end (an integer count of which journey step the customer is on).
 
 ![Fig0](figures/fig0.png)
+
 **Figure 0: Fingerhut Dataset**
 
 ## <u>**Question 1**</u>
@@ -78,6 +79,7 @@ The data used in this project was provided by Fingerhut, an American catalog/onl
 ![Fig1a](figures/fig1a.png)
 ![Fig1b](figures/fig1b.png)
 ![Fig1c](figures/fig1c.png)
+
 **Figure 1(a-c): Exploratory Data Analysis**
 
 ### 1.2 Data Cleaning
@@ -85,6 +87,7 @@ The data used in this project was provided by Fingerhut, an American catalog/onl
   To clean the data, we first performed a left merge of the main dataset and the event definitions dataset on the event IDs to have each entry represented with a stage. We noticed that rows containing event IDs 1 and 24 (those being “promotion_created” and “campaignemail_clicked” respectively) had no associated stage; as a fix, we assigned them an arbitrary stage called “misc.” Since this question primarily focuses on stages and events, we only kept the following columns: the customer ID, the event ID (since event name and ID were semantically identical while the latter is visually easier to identify), and the journey_steps_until_end variable. One crucial assumption we made in the next step was to assume that a new journey for a customer restarted when the journey_steps_until_end reset to 1. We first cataloged the number of journeys taken for each customer, as indicated by a reset in the journey_steps_until_end variable, then combined all the event IDs and stages into their own lists for each journey per customer.
 
 ![Table1](tables/table1.png)
+
 **Table 1: Customers with Labeled Multiple Journeys, and Stage and Path as Lists**
 
 Performing EDA on our modified dataset provides a few insights:
@@ -94,9 +97,11 @@ Performing EDA on our modified dataset provides a few insights:
   (4) Multiple journeys are rather uncommon; the majority of customers only did one journey, a few had a second journey, and a very tiny minority ever did more than three journeys total.
 
 ![Fig2](figures/fig2.png)
+
 **Figure 2: EDA on Multiple Journeys**
 
 ![Table2](tables/table2.png)
+
 **Table 2: Summary Statistics of Multiple Journeys**
 
 ### 1.3 Feature Engineering
@@ -104,12 +109,14 @@ Performing EDA on our modified dataset provides a few insights:
 After cleaning the data, we begin with labeling stages in accordance with how “ideal” they were. In the case of testing how customers progress through stages, we used a metric of comparing a customer’s entire journey in stages to Fingerhut’s ideal stage route: (1) Apply for Credit (2) First Purchase (3) Down Payment (4) Order Shipped. A score is assigned to how many of these stages are reached in that specific order, then labeled with a 1 for “ideal” only if all four stages happen to be present within the customer’s stages.
 
 ![Fig3](figures/fig3.png)
+
 **Figure 3: Imbalanced Dataset for Ideal and Non-Ideal Paths**
 
   Our initial labeling shows that the dataset is imbalanced with 317,592 ideal paths and 1,501,408 non-ideal paths (for a total of 1,819,000 labels), requiring us to balance the dataset. Based on our binary labeling of the paths, we see that roughly 21.15% of total journeys were considered ideal.
   Due to hardware constraints (i.e. the kernel continued to crash with memory-intensive actions), we were unable to balance the dataset in its rawest form with the labels without pre-processing. However, implementing pre-processing enables us to use techniques such as oversampling to balance out the dataset without encountering issues. We first converted the list of stages into a string version of the entire list, then applied a vectorizer (CountVectorizer) to turn these lists into numerical vectors that can be inputted into our models. The result is twelve different features representing the different stages. The table below shows each stage and its corresponding features:
 
 ![Table3](tables/table3.png)
+
 **Table 3: Stages and Features**
 
 After performing an 80/20 train-test split of the dataset, we proceeded to apply oversampling on the training data for the minority class (in this case, “Ideal” or 1’s).
@@ -124,9 +131,11 @@ For best predicting ideal paths, we used three different models and evaluated th
 Logistic Regression is a common supervised classification technique that can be applied to the scoring system we used for labeling ideal journeys. However, fitting the labels without further modification leads to this technique performing too well [1]. To counter the issue of overfitting, we applied L2 regularization as well as hyperparameter tuning, specifically for the inverse of regularization strength C; decreasing C will increase the regularization strength of the model. Hyperparameter tuning for the optimal C value produced C = 10. The results are shown below in Figure 4 and Table 4:
 
 ![Fig4](figures/fig4.png)
+
 **Figure 4: ROC Curve for Logistic Regression (C = 10)**
 
 ![Table4](tables/table4.png)
+
 **Table 4: Performance Metrics for Logistic Regression (L: Baseline, R: Best)**
 
 #### 1.4.2 Random Forest
@@ -136,12 +145,15 @@ Logistic Regression is a common supervised classification technique that can be 
   Pruning controls complexity and prevents overfitting by restricting the model’s ability to memorize training data. However, it appears that pruning does not have the largest effect on model performance.
 
 ![Fig5](figures/fig5.png)
+
 **Figure 5: Random Forest Decision Tree Model**
 
 ![Table5](tables/table5.png)
+
 **Table 5: Feature Importances**
 
 ![Table6](tables/table6.png)
+
 **Table 6: Model Performance for Random Forest**
 
 #### 1.4.3 K-Means Clustering — K-means Classifier
@@ -151,21 +163,27 @@ Logistic Regression is a common supervised classification technique that can be 
   For our best model, we find the cumulative explained variance ratio to determine the number of PCA components to use; 2 components explain at least 95% variance, which will be the optimal number of PCA components we use. We then apply the elbow method to determine the optimal number of K Clusters to use; past 3 clusters is when the graph begins to plateau, meaning the optimal number of K-clusters we use is 3. We proceed to scale the training and testing data for our inputs, apply PCA onto our inputs, and repeat the same steps as the baseline model; a grid search for hyperparameter-tuning for Logistic Regression shows that C = 10 is the most optimal. The following results are summarized by the figures and tables below:
 
 ![Fig6](figures/fig6.png)
+
 **Figure 6: Determining the Optimal Number of PCA components and K-Clusters for Model**
 
 ![Fig7](figures/fig7.png)
+
 **Figure 7: PCA Components for All Features**
 
 ![Fig8](figures/fig8.png)
+
 **Figure 8: Classification Reports and Confusion Matrices for K-Means Cluster Model (L: Baseline, R: Best)**
 
 ![Fig9](figures/fig9.png)
+
 **Figure 9: ROC Curve for K-Means Clustering with Logistic Regression Classifier (Before and After Optimization)**
 
 ![Table7](tables/table7.png)
+
 **Table 7: Model Performance for K-Means Clustering with Logistic Regression Classifier**
 
 ![Fig10](figures/fig10.png)
+
 **Figure 10: Visualization of 3 K-Means Clusters with 2 Principal Components**
 
 #### 1.5 Results
@@ -181,15 +199,19 @@ However, unsupervised learning models seem to perform more appropriately at the 
 Through our analysis of the dataset, we also decided to focus on whether the time between intermediate milestone achievements such as (variable name: place_downpayment) and credit account activation (variable name: account_activitation which was unfortunately misspelled in the provided dataset) had any effect on the rate at which a customer completed their journey by having their order shipped. We did so by measuring the time between Stage 1 and Stage 3 of the milestones provided by Fingerhut — account application in “Apply for Credit” and account activation in “Credit Account” — and running them through several models to see if there was a significant difference between them and baseline predictors of whether the duration of time between stages would predict if the customer eventually completed their journey by having an order shipped.
 
 ![Fig11](figures/fig11.png)
+
 **Figure 11(a-c): Respective Counts for Each Milestone for 2021, 2022, and 2023 by Week Number**
 
 ![Fig12](figures/fig12.png)
+
 **Figure 12(a-c): Respective Proportions of Various Milestones Relative to “Order Shipped” for 2021, 2022, and 2023 by Week Number**
 
 ![Fig13](figures/fig13.png)
+
 **Figure 13(a-b): Number of Accounts that Reached “Downpayment,” “Activated Credit,” and “Order Shipped”**
 
 ![Fig14](figures/fig14.png)
+
 **Figure 14(a-c): Number of Accounts that Reached “Downpayment,” “Activated Credit,” and “Order Shipped” Over 2021-2023 by Month**
 
   From Figure 11(a-c), we see that week over week, “First Purchase” is by far the most common stage, followed by the “Apply for Credit” stage. In addition, there is a dip in activity across stages in weeks 31-37, from late July to late September. We then see an uptick in activity across stages in weeks 47-51, corresponding with the holiday season. Holistically, these graphs show customer behavior in a given year and allow us to predict how many unique customers will reach certain milestones in a given year.
@@ -210,12 +232,15 @@ Through our analysis of the dataset, we also decided to focus on whether the tim
 ### 2.4 Results: Logistic Regression / Random Forest Models
 
 ![Fig15](figures/fig15.png)
+
 **Figure 15: A frequency chart of the time between Account Activation and Application Approval**
 
 ![table8](tables/table8.png)
+
 **Table 8: Classification Report for Random Forest Model**
 
 ![table9](tables/table9.png)
+
 **Table 9: Accuracy of different models**
 
   The Random Forest model in particular overtrained to such an extent that over 99% of the journeys were classified as reaching completion by being characterized as having shipped an order. In reality, only 76% of these journeys in this particular dataset were completed which made the recall score a perfect 100% for the completed journeys while only scoring at 2% for incomplete journeys. Even with a rebalanced dataset, the graph of time between these stages shows a similar trend of exponential decay at a scale that reflects the different sizes of population groups within the data so we were unable to glean much meaningful information from this aspect of our analysis. These methods ultimately turned out to be unsuccessful as the models showed little to no improvement over a baseline assumption.
@@ -225,30 +250,39 @@ Through our analysis of the dataset, we also decided to focus on whether the tim
   To determine the relationship between the predictor variables, we used a correlation matrix. In Figure 17, we see that the variables corresponding to the stages “Credit Account” and “Downpayment” are highly correlated. Furthermore, “Credit Account” and “Prospecting” in addition to “Downpayment” and “Prospecting” are moderately correlated. Then, we considered 4 different combinations of predictor variables and ran Logistic Regression models. These 4 combinations include all predictors, all predictors excluding “Downpayment,” all predictors excluding “Credit Account,” and all predictors excluding “Downpayment” and “Credit Account.” By isolating the variables “Downpayment” and “Credit Account,” which had a relatively high feature importance, as seen in Figure 18, and were highly correlated with each other, as seen in Figure 17, we could better understand which milestones influenced the shipment of orders. Below are Figures 18-21 and Tables 9-12, the barplots for these 4 combinations, and their accompanying classification reports and confusion matrices.
 
 ![Fig17](figures/fig17.png)
+
 **Figure 17: Correlation Matrix of Predictor Variables - Binary Dataset**
 
 ![Fig18](figures/fig18.png)
+
 **Figure 18: Barplot of Feature Importance in Logistic Regression Model for All Predictors - Binary Dataset**
 
 ![table10](tables/table10.png)
+
 **Table 10: Classification Report and Confusion Matrix for All Predictors - Binary Dataset**
 
 ![Fig19](figures/fig19.png)
+
 **Figure 19: Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Downpayment - Binary Dataset**
 
 ![table11](tables/table11.png)
+
 **Table 11: Classification Report and Confusion Matrix for All Predictors Excluding Downpayment - Binary Dataset**
 
 ![Fig20](figures/fig20.png)
+
 **Figure 20: Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account - Binary Dataset**
 
 ![table12](tables/table12.png)
+
 **Table 12: Classification Report and Confusion Matrix for All Predictors Excluding Credit Account - Binary Dataset**
 
 ![Fig21](figures/fig21.png)
+
 **Figure 21: Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account and Downpayment - Binary Dataset**
 
 ![table13](tables/table13.png)
+
 **Table 13: Classification Report and Confusion Matrix for All Predictors Excluding Credit Account and Downpayment - Binary Dataset**
 
   Based on Figure 18, we see that “Downpayment” has the highest feature importance in the Logistic Regression model that included all predictor variables, followed by the “Apply for Credit” stage. This model was supported by 98% accuracy in addition to 98% weighted average precision, recall, and F-1 score.
@@ -262,30 +296,39 @@ Through our analysis of the dataset, we also decided to focus on whether the tim
   In Figure 22, similar to the binary dataset, we see that the stages “Credit Account” and “Downpayment” are highly correlated. Furthermore, “Credit Account” and “Prospecting” in addition to “Downpayment” and “Prospecting” are moderately correlated. Then, we considered 4 different combinations of predictor variables and ran Logistic Regression models (the same combinations used for the binary dataset). Below are Figures 23-26 and Tables 13-16, the barplots for these 4 combinations and their accompanying classification reports and confusion matrices.
 
 ![Fig22](figures/fig22.png)
+
 **Figure 22: Correlation Matrix of Predictor Variables - Values Dataset**
 
 ![Fig23](figures/fig23.png)
+
 **Figure 23: Barplot of Feature Importance in Logistic Regression Model for All Predictors - Values Dataset**
 
 ![table14](tables/table14.png)
+
 **Table 14: Classification Report and Confusion Matrix for All Predictors - Values Dataset**
 
 ![Fig24](figures/fig24.png)
+
 **Figure 24: Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Downpayment - Values Dataset**
 
 ![table15](tables/table15.png)
+
 **Table 15: Classification Report and Confusion Matrix for All Predictors Excluding Downpayment - Values Dataset**
 
 ![Fig25](figures/fig25.png)
+
 **Figure 25: Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account - Values Dataset**
 
 ![table16](tables/table16.png)
+
 **Table 16: Classification Report and Confusion Matrix for All Predictors Excluding Credit Account - Values Dataset**
 
 ![Fig26](figures/fig26.png)
+
 **Figure 26: Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account and Downpayment - Values Dataset**
 
 ![table17](tables/table17.png)
+
 **Table 17: Classification Report and Confusion Matrix for All Predictors Excluding Credit Account and Downpayment - Values Dataset**
 
   Based on Figure 23, we see that “Credit Account” has the highest feature importance in the Logistic Regression model that included all predictor variables, followed by “Downpayment.” This model was supported by 98% accuracy in addition to 98% weighted average precision, recall, and F-1 score.
@@ -315,12 +358,15 @@ Through our analysis of the dataset, we also decided to focus on whether the tim
   We have constructed our predictive models specifically for milestones 3, 4, and 5 to take into account the customer behaviors at different stages. Notably, we have not developed a model for milestones 1, 2, and 6. Milestone 1 lacks a preceding milestone, making it impossible for us to build a model. Milestone 2 presents a case where we only observe one preceding time_elapsed value. The lack of multiple observations means there may be minimal variability in prediction, leading to predictions that may not be ideal. As for milestone 6, which corresponds to the event order_shipped, the milestone’s occurrence depends on the company’s logistical operation rather than customer behaviors. Consequently, analyzing milestone 6 doesn’t contribute to our goal of predicting customer behaviors.
 
 ![Fig27](figures/fig27.png)
+
 **Figure 27: Plot for Actual vs Predicted Time For Milestone 3**
 
 ![Fig28](figures/fig28.png)
+
 **Figure 28 (L): Plot for Actual vs Predicted Time For Milestone 4**
 
 ![Fig29](figures/fig29.png)
+
 **Figure 29 (R): Plot for Actual vs Predicted Time For Milestone 5**
 
   Figure 28 has the same context as the preceding figure. It provides a comparison of predicted versus actual time elapsed for milestone 4 with two different models. The LSTM model clearly captures the variability of the actual time to some degree. It suggests the superiority of the LSTM model over the average model in this context. The MSE for the LSTM model is 5.71, while the MSE for the average model is 18.44.
