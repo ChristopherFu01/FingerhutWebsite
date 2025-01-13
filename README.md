@@ -406,8 +406,8 @@ FingerhutWebsite/
 |   ├── Event Definitions.csv            # Definitions of the website events and actions
 |   └── verysmall.csv                    # small sample of the dataset containing customer data on Fingerhut website
 |   
-├── SLIDE DECK.pdf                       # PDF of presentation shown at end of capstone project
-└── README.md                            # Project documentation
+├── README.md                            # Project documentation
+└── SLIDE DECK.pdf                       # PDF of presentation shown at end of capstone project
 ```
 
 ## References
