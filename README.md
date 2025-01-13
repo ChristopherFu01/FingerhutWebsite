@@ -346,6 +346,14 @@ Through our analysis of the dataset, we also decided to focus on whether the tim
 ```plaintext
 FingerhutWebsite/
 |
+├── code/                                # Folder containing all code related files
+|   ├── CONTAINER (FINAL).ipynb          # PDF of Python code focused on EDA and model building in the delivery ward
+|   └── CONTAINER (FINAL).pdf            # PDF of Python code
+|
+├── data/                                # Folder containing all data related files
+|   ├── Event Definitions.csv            # Definitions of the website events and actions
+|   └── verysmall.csv                    # small sample of the dataset containing customer data on Fingerhut website
+|
 ├── figures/                             # Folder containing all relevant figures of EDA and model results
 |   ├── Fig0.png                         # Fingerhut Dataset
 |   ├── Fig1a.png                        # Exploratory Data Analysis
@@ -398,13 +406,6 @@ FingerhutWebsite/
 |   ├── Table16.png                      #  Classification Report and Confusion Matrix for All Predictors Excluding Credit Account - Values Dataset
 |   └── Table17.png                      # Classification Report and Confusion Matrix for All Predictors Excluding Credit Account and Downpayment - Values Dataset
 |
-├── code/                                # Folder containing all code related files
-|   ├── CONTAINER (FINAL).ipynb          # PDF of Python code focused on EDA and model building in the delivery ward
-|   └── CONTAINER (FINAL).pdf            # PDF of Python code
-|
-├── data/                                # Folder containing all data related files
-|   ├── Event Definitions.csv            # Definitions of the website events and actions
-|   └── verysmall.csv                    # small sample of the dataset containing customer data on Fingerhut website
 |   
 ├── README.md                            # Project documentation
 └── SLIDE DECK.pdf                       # PDF of presentation shown at end of capstone project
