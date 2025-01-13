@@ -453,7 +453,8 @@ FingerhutWebsite/
 |   ├── Table15.png                      # Classification Report and Confusion Matrix for All Predictors Excluding Downpayment - Values Dataset
 |   ├── Table16.png                      #  Classification Report and Confusion Matrix for All Predictors Excluding Credit Account - Values Dataset
 |   └── Table17.png                      # Classification Report and Confusion Matrix for All Predictors Excluding Credit Account and Downpayment - Values Dataset
-|   
+|
+├── LICENSE                              # License Information  
 ├── README.md                            # Project documentation
 └── SLIDE DECK.pdf                       # PDF of presentation shown at end of capstone project
 ```
