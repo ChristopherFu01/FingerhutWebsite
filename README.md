@@ -403,11 +403,8 @@ FingerhutWebsite/
 |   └── CONTAINER (FINAL).pdf            # PDF of Python code
 |
 ├── data/                                # Folder containing all data related files
-|   ├── export.csv                       # Main data file containing customer data on Fingerhut website
 |   ├── Event Definitions.csv            # Definitions of the website events and actions
-|   ├── verysmall.csv                    # small sample of the dataset
-|   ├── smaller_sample.csv               # smaller sample of the dataset
-|   └── even_smaller_sample.csv          # extremely small sample of the dataset
+|   └── verysmall.csv                    # small sample of the dataset containing customer data on Fingerhut website
 |   
 ├── SLIDE DECK.pdf                       # PDF of presentation shown at end of capstone project
 └── README.md                            # Project documentation
