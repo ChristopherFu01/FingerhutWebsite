@@ -31,7 +31,9 @@
   - [3.4 Prediction Results](#34-prediction-results)
 - [4 Discussion](#4-discussion)
   - [4.1 Conclusion](#41-conclusion)
-  - [4.2 Future Work](#42-future-work) 
+  - [4.2 Future Work](#42-future-work)
+- [References](#references)
+- [Contact Information](#contact-information)
 
 ## Executive Summary
 
@@ -460,3 +462,10 @@ FingerhutWebsite/
 [1] Subramanian, Jyothi, and Richard Simon. "Overfitting in prediction models–is it a problem only in high dimensions?." Contemporary clinical trials 36.2 (2013): 636-641
 [2] Czarnowski, Ireneusz. "Cluster-based instance selection for machine classification." Knowledge and Information Systems 30 (2012): 113-133.
 [3] Fingerhut, www.fingerhut.com/content/OurStory. Accessed 18 Mar. 2024.
+
+## Contact Information
+
+For any questions, please contact:
+
+- Name: Christopher Fu
+- Email: christopherfuwas@gmail.com
