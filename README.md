@@ -2,12 +2,13 @@
 
 ## Table of Contents
 
-- [I. Executive Summary](#executive-summary)
-- [II. Acknowledgments](#acknowledgments)
+- [I. Executive Summary](#i.-executive-summary)
+- [II. Acknowledgments](#ii.-acknowledgments)
   - [Team Acknowledgment](#team-acknowledgment)
-  - [Data Acknowledgment)
-- [A. Abstract](#abstract)
-- [B. Introduction](#introduction)
+  - [Data Acknowledgment](#data-acknowledgment)
+- [A. Abstract](#a.-abstract)
+- [B. Introduction](#b.-introduction)
+- [Question 1](#question-1)
 
 ## I. Executive Summary
 
