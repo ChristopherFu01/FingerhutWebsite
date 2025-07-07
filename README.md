@@ -417,20 +417,20 @@ FingerhutWebsite/
 |   ├── Fig9.png                         # ROC Curve for K-Means Clustering with Logistic Regression Classifier (Before and After Optimization)
 |   ├── Fig10.png                        # Visualization of 3 K-Means Clusters with 2 Principal Components
 |   ├── Fig11.png                        # Respective Counts for Each Milestone for 2021, 2022, and 2023 by Week Number
-|   ├── Fig12.png                        #  Respective Proportions of Various Milestones Relative to “Order Shipped” for 2021, 2022, and 2023 by Week Number
+|   ├── Fig12.png                        # Respective Proportions of Various Milestones Relative to “Order Shipped” for 2021, 2022, and 2023 by Week Number
 |   ├── Fig13.png                        # Number of Accounts that Reached “Downpayment,” “Activated Credit,” and “Order Shipped”
-|   ├── Fig14.png                        #  Number of Accounts that Reached “Downpayment,” “Activated Credit,” and “Order Shipped” Over 2021-2023 by Month
+|   ├── Fig14.png                        # Number of Accounts that Reached “Downpayment,” “Activated Credit,” and “Order Shipped” Over 2021-2023 by Month
 |   ├── Fig15.png                        # A frequency chart of the time between Account Activation and Application Approval
 |   ├── Fig17.png                        # Correlation Matrix of Predictor Variables - Binary Dataset
 |   ├── Fig18.png                        # Barplot of Feature Importance in Logistic Regression Model for All Predictors - Binary Dataset
 |   ├── Fig19.png                        # Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Downpayment - Binary Dataset
 |   ├── Fig20.png                        # Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account - Binary Dataset
 |   ├── Fig21.png                        # Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account and Downpayment - Binary Dataset
-|   ├── Fig22.png                        #
+|   ├── Fig22.png                        # Correlation Matrix of Predictor Variables - Values Dataset
 |   ├── Fig23.png                        # Barplot of Feature Importance in Logistic Regression Model for All Predictors - Values Dataset
 |   ├── Fig24.png                        # Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Downpayment - Values Dataset
 |   ├── Fig25.png                        # Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account - Values Dataset
-|   ├── Fig26.png                        #  Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account and Downpayment - Values Dataset
+|   ├── Fig26.png                        # Barplot of Feature Importance in Logistic Regression Model for All Predictors Excluding Credit Account and Downpayment - Values Dataset
 |   ├── Fig27.png                        # plot for Actual vs Predicted Time For Milestone 3
 |   ├── Fig28.png                        # (L): plot for Actual vs Predicted Time For Milestone 4
 |   └── Fig29.png                        # (R): plot for Actual vs Predicted Time For Milestone 5
@@ -451,7 +451,7 @@ FingerhutWebsite/
 |   ├── Table13.png                      # Classification Report and Confusion Matrix for All Predictors Excluding Credit Account and Downpayment - Binary Dataset
 |   ├── Table14.png                      # Classification Report and Confusion Matrix for All Predictors - Values Dataset
 |   ├── Table15.png                      # Classification Report and Confusion Matrix for All Predictors Excluding Downpayment - Values Dataset
-|   ├── Table16.png                      #  Classification Report and Confusion Matrix for All Predictors Excluding Credit Account - Values Dataset
+|   ├── Table16.png                      # Classification Report and Confusion Matrix for All Predictors Excluding Credit Account - Values Dataset
 |   └── Table17.png                      # Classification Report and Confusion Matrix for All Predictors Excluding Credit Account and Downpayment - Values Dataset
 |
 ├── LICENSE                              # License Information  
